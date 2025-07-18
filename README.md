@@ -15,12 +15,12 @@ API RESTful construída com **NestJS** e **SQLite em memória** para leitura e a
 ---
 
 ## 🛠 Tecnologias utilizadas
-Node.js – Ambiente de execução JavaScript
-NestJS – Framework para criação de APIs
-CSV Parser (e.g., csv-parser) – Leitura do arquivo CSV
-SQLite (in-memory) – Banco de dados temporário
-Jest – Testes automatizados
-ESLint + Prettier – Padronização de código (se usados)
+- Node.js – Ambiente de execução JavaScript
+- NestJS – Framework para criação de APIs
+- CSV Parser (e.g., csv-parser) – Leitura do arquivo CSV
+- SQLite (in-memory) – Banco de dados temporário
+- Jest – Testes automatizados
+- ESLint + Prettier – Padronização de código (se usados)
 
 ## 🚀 Como rodar o projeto
 
