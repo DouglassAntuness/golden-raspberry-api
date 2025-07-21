@@ -10,6 +10,7 @@ import { FilmeController } from './controllers/filme.controller';
 
 // Controllers
 import { FilmeService } from './services/filme.service';
+import { AppController } from './app.controller';
 
 
 @Module({
@@ -27,6 +28,7 @@ import { FilmeService } from './services/filme.service';
     TypeOrmModule.forFeature([Filme]),
   ],
   controllers: [
+    AppController,
     FilmeController
   ],
   providers: [

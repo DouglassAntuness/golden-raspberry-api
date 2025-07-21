@@ -43,6 +43,59 @@ export class FilmeService implements OnModuleInit {
       });
   }
 
+  async listarFilmesComFiltro({
+    page = 1,
+    year,
+    winner,
+    title,
+  }: {
+    page: number;
+    year?: number;
+    winner?: string;
+    title?: string;
+  }) {
+    // Define a quantidade de itens por página e calcula o deslocamento
+    const take = 10;
+    const skip = (page - 1) * take;
+
+    const query = this.filmeRepo.createQueryBuilder('filme');
+
+    // Aplica os filtros, se fornecido
+    if (year) {
+      query.andWhere('filme.year = :year', { year });
+    }
+
+    if (winner !== undefined) {
+      if (winner.toLowerCase() === 'yes') {
+        query.andWhere('filme.winner = true');
+      } else if (winner.toLowerCase() === 'no') {
+        query.andWhere('filme.winner = false');
+      }
+    }
+
+    if (title) {
+      query.andWhere('LOWER(filme.title) LIKE :title', {
+        title: `%${title.toLowerCase()}%`,
+      });
+    }
+
+    // Executa a consulta com ordenação, paginação e retorna os dados e total
+    const [data, total] = await query
+      .orderBy('filme.id', 'ASC')
+      .skip(skip)
+      .take(take)
+      .getManyAndCount();
+
+    // Retorna os dados paginados, total de itens e número de páginas
+    return {
+      data,
+      total,
+      page,
+      pageCount: Math.ceil(total / take),
+    };
+  }
+
+
   async getIntervalosPremios() {
     // 1. Buscar apenas os filmes vencedores
     const vencedores = await this.filmeRepo.find({
@@ -96,4 +149,63 @@ export class FilmeService implements OnModuleInit {
       max: intervalos.filter((i) => i.interval === maxInterval),
     };
   }
+
+  // Retorna os anos em que houve mais de um vencedor
+  async getYearsWithMultipleWinners() {
+    // Busca todos os filmes vencedores
+    const vencedores = await this.filmeRepo.find({
+      where: { winner: true },
+    });
+
+    const mapa: Record<number, number> = {};
+
+    for (const f of vencedores) {
+      mapa[f.year] = (mapa[f.year] || 0) + 1;
+    }
+
+    // Filtra os anos com mais de 1 vencedor e retorna como lista de objetos
+    return Object.entries(mapa)
+      .filter(([_, count]) => count > 1)
+      .map(([year, count]) => ({
+        year: Number(year),
+        winCount: count,
+      }));
+  }
+
+  // Retorna os 3 estúdios com mais vitórias
+  async getTopStudios() {
+    // Busca todos os filmes vencedores
+    const vencedores = await this.filmeRepo.find({
+      where: { winner: true },
+    });
+
+    const mapa: Record<string, number> = {};
+
+    for (const f of vencedores) {
+      const estudios = f.studios.split(',').map((e) => e.trim());
+      for (const est of estudios) {
+        mapa[est] = (mapa[est] || 0) + 1;
+      }
+    }
+
+    // Converte para array, ordena decrescente e pega os 3 primeiros
+    return Object.entries(mapa)
+      .map(([name, count]) => ({ name, winCount: count }))
+      .sort((a, b) => b.winCount - a.winCount)
+      .slice(0, 3);
+  }
+
+  // Retorna todos os vencedores de um determinado ano
+  async getWinners(ano: number) {
+    return this.filmeRepo.find({
+      where: {
+        year: ano,
+        winner: true,
+      },
+      select: ['id', 'year', 'title'],
+      order: { title: 'ASC' },
+    });
+  }
+
+
 }

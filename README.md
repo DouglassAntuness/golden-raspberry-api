@@ -34,7 +34,7 @@ API RESTful construída com **NestJS** e **SQLite em memória** para leitura e a
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/golden-raspberry-api.git
+git clone https://github.com/DouglassAntuness/golden-raspberry-api.git
 cd golden-raspberry-api
 ```
 
@@ -42,10 +42,19 @@ cd golden-raspberry-api
 
 ```bash
 yarn install
+# ou
+npm install
 ```
 
 3. Inicie o projeto:
 
 ```bash
 yarn start:dev
+# ou
+npm start:dev
+```
+
+4. Acesse:
+```bash
+http://localhost:8000
 ```

@@ -9,6 +9,7 @@ async function bootstrap() {
     'http://localhost:8000',
     'http://localhost:8082',
     'http://localhost:3333',
+    'http://localhost:3000',
   ]
 
   // Habilitando CORS
@@ -22,7 +23,7 @@ async function bootstrap() {
   app.use(bodyParser.json({ limit: '50mb' }));
   app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
   
-  await app.listen(3000, '0.0.0.0');
+  await app.listen(8000, '0.0.0.0');
 
 }
 bootstrap();
