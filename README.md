@@ -11,6 +11,7 @@ API RESTful construída com **NestJS** e **SQLite em memória** para leitura e a
 - Expõe um endpoint que retorna o produtor com:
   - **Menor intervalo** entre dois prêmios consecutivos.
   - **Maior intervalo** entre dois prêmios consecutivos.
+- **Testes automatizados com Jest**
 
 ---
 
@@ -57,4 +58,11 @@ npm start:dev
 4. Acesse:
 ```bash
 http://localhost:8000
+```
+
+5. Como rodar os testes:
+```bash
+yarn test
+# ou
+npm run test
 ```
