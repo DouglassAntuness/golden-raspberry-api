@@ -3,13 +3,13 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 // Models
-import { Filme } from './models/filme.entity';
+import { Movie } from './models/movie.entity';
 
 // Services
-import { FilmeController } from './controllers/filme.controller';
+import { MovieController } from './controllers/movie.controller';
 
 // Controllers
-import { FilmeService } from './services/filme.service';
+import { MovieService } from './services/movie.service';
 import { AppController } from './app.controller';
 
 
@@ -22,17 +22,17 @@ import { AppController } from './app.controller';
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: ':memory:',
-      entities: [Filme],
+      entities: [Movie],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Filme]),
+    TypeOrmModule.forFeature([Movie]),
   ],
   controllers: [
     AppController,
-    FilmeController
+    MovieController
   ],
   providers: [
-    FilmeService
+    MovieService
   ],
 })
 export class AppModule { }

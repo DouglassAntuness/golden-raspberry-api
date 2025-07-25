@@ -52,12 +52,12 @@ npm install
 ```bash
 yarn start:dev
 # ou
-npm start:dev
+npm run start:dev
 ```
 
 4. Acesse:
 ```bash
-http://localhost:8000
+http://localhost:8000/api/movie/maxMinWinIntervalForProducers
 ```
 
 5. Como rodar os testes:
